@@ -17,14 +17,20 @@ class CoinRepository {
   List<CoinModel> parseCoins(String xmlRaw) {
     final document = XmlDocument.parse(xmlRaw);
 
-    final elements = document.children.first.children.whereType<XmlElement>();
+    //estava pegando o primeiro elemento do xml
+    final elements = document.children.last.children.whereType<XmlElement>();
     final coins = <CoinModel>[];
 
     for (var element in elements) {
-      final model = CoinModel(name: element.localName, code: element.innerText);
+      final model = CoinModel(
+        //code estava ao contrario
+        code: element.localName,
+        name: element.innerText,
+      );
       coins.add(model);
     }
-    return [];
+    //estava retornando um array vazio
+    return coins;
   }
 
   Future<double> quotation(CoinModel coinIn, CoinModel coinOut) async {
